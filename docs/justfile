@@ -1,0 +1,8 @@
+src := "main.typ"
+out := "RPi-onramp.pdf"
+
+build:
+    typst compile {{ src }} {{ out }}
+
+watch:
+    typst watch {{ src }} {{ out }}

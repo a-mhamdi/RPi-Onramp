@@ -1,6 +1,6 @@
 // HOW TO WRITE IN TYPST
 
-#import "@preview/showybox:2.0.1": showybox
+#import "@preview/showybox:2.0.4": showybox
 #import "@preview/colorful-boxes:1.2.0": stickybox
 
 #let title = "Learn To Write In Typst"
@@ -40,7 +40,7 @@ Typst supports Markdown syntax, which provides a range of formatting options. He
 	-	Inline code: enclose the code within backticks (\`)
 	-	Block of code: use triple backticks followed by the language you are using to enable syntax highlighting
 	#raw("```python
-    import numpy as np 
+    import numpy as np
     from matplotlib import pyplot as plt
 
     plt.plot(np.sin(np.linspace(0, 2 * np.pi)))
