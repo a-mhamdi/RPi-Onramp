@@ -3,7 +3,7 @@
 
 #show: slides.with(
   theme: "normal",
-  title-color: dark-red,
+  title-color: light-blue,
   count: "dot",
   toc: false,
   ratio: 16 / 9,
@@ -12,9 +12,6 @@
   date: datetime.today().display("[year]-[month]-[day]"),
   authors: "Abdelbacet Mhamdi",
 )
-
-
-
 
 #include "parts/rpi.typ"
 #include "parts/jl.typ"

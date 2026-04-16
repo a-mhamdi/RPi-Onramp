@@ -1,10 +1,12 @@
+#import "../common.typ": *
+
 = General Overview
 
-== Why Use Raspberry Pi
+#hl[*Why Use Raspberry Pi*]
 
 Raspberry Pi is a popular choice for beginners because it is affordable, well-documented, and has a large community. It ships with a familiar Debian-based environment, making it easy to get started with Linux. It is equally suited for advanced users who want to build custom hardware projects, run home servers, or experiment with electronics via its 40-pin GPIO header.
 
-== What is Raspberry Pi
+#hl[*What is Raspberry Pi*]
 
 Raspberry Pi is a *low-cost* operating systems. It is a popular platform for single-board computer _capable of running_ Linux-based embedded systems, IoT projects, home automation, education, and prototyping. It was originally developed by the Raspberry Pi Foundation (now Raspberry Pi Ltd.) with the goal of promoting computer science education.
 
@@ -52,6 +54,21 @@ Once SSH is enabled, connect from another machine with:
 ssh <username>@<hostname>.local
 # e.g. ssh pi@raspberrypi.local
 ```
+
+#info[Create a new connection profile of type Ethernet on the physical interface enp4s0. The PC will act as a DHCP server and automatically assign an IP address to any device connected via Ethernet (the Pi), while also enabling NAT to share the laptop's internet connection.
+  ```bash
+  nmcli connection add type ethernet ifname enp4s0 con-name "rpi-share" ipv4.method shared
+  ```
+  Activate and inspect the connection
+  ```bash
+  nmcli connection up "rpi-share"
+  nmcli connection show "rpi-share"
+  ```
+  Perform a ping sweep across all 254 addresses, without port scanning
+  ```bash
+  nmap -sn 10.42.0.0/24
+  ```
+]
 
 === SSH Key Authentication
 
@@ -128,16 +145,11 @@ Then restart the SSH service:
 sudo systemctl restart ssh
 ```
 
-#block(
-  fill: rgb("#fff3cd"),
-  inset: 8pt,
-  radius: 4pt,
-  stroke: 1pt + rgb("#ffc107"),
-)[
-  *Warning:* Do not disable password login until you have verified that key
+
+
+#warning[Do not disable password login until you have verified that key
   authentication works in a separate terminal session. Locking yourself out
-  would require physical access to the Pi to recover.
-]
+  would require physical access to the Pi to recover.]
 
 ==== Using a key with GitHub
 
