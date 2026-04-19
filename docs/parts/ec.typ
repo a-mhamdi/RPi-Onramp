@@ -364,4 +364,3 @@ julia --threads 4
 
 Julia is a viable and productive language for Raspberry Pi projects that involve data acquisition, sensor interfacing, and networked services. Its combination of dynamic interactivity through the REPL, access to native C libraries via `ccall`, a capable standard networking library, and a rich package ecosystem makes it well-suited for building systems that would otherwise require C or Python with native extensions. The main trade-off to manage is package precompilation time, which can be mitigated with `PackageCompiler.jl` for deployment-ready images.
 */
->>>>>>> Stashed changes
