@@ -145,6 +145,8 @@ The command produces two files:
 ~/.ssh/rpi.pub  # public key  — this goes on the Pi
 ```
 
+---
+
 === Copy the public key to the Raspberry Pi
 
 The simplest method is `ssh-copy-id`, which handles directory creation and permissions automatically:
@@ -164,6 +166,8 @@ cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
 ```
 */
 
+---
+
 === Connect using the key
 ```bash
 ssh <username>@<pi-ip-address>
@@ -176,7 +180,36 @@ eval "$(ssh-agent -s)"   # start the agent
 ssh-add ~/.ssh/rpi  # load the key (prompts for passphrase once)
 ```
 
-=== Disable password login on the Pi
+---
+
+#info[SSH Client Configuration File]
+The `~/.ssh/config` file lets you define *host aliases* with all connection parameters, so you never have to remember long `ssh` commands again.
+```
+Host rpi
+    HostName raspberrypi.local
+    User pi
+    IdentityFile ~/.ssh/rpi
+    ServerAliveInterval 60
+```
+/*
+#table(
+  columns: (auto, 1fr),
+  [*Directive*], [*Role*],
+  [`Host`],               [Alias you type on the command line],
+  [`HostName`],           [Real address or mDNS name of the machine],
+  [`User`],               [Remote username — no need for `user@host`],
+  [`IdentityFile`],       [Path to the private key for this host],
+  [`ServerAliveInterval`],[Sends a keepalive every _n_ seconds to prevent timeout],
+)
+*/
+With this configuration in `~/.ssh/config`, you can simply run:
+```bash
+ssh rpi
+```
+
+---
+
+// === Disable password login on the Pi
 
 Once key authentication is confirmed to be working, you can disable password logins entirely to harden the Pi against brute-force attacks. Edit the SSH server config:
 ```bash
@@ -188,12 +221,10 @@ Find and set the following lines _(restart the ssh service afterwards)_:
 PasswordAuthentication no
 PubkeyAuthentication yes
 ```
-Then restart the SSH service:
-```bash
-sudo systemctl restart ssh
-```
-
----
+Then restart the SSH service.
+// ```bash
+// sudo systemctl restart ssh
+// ```
 
 #warning[Do not disable password login until you have verified that key
   authentication works in a separate terminal session. Locking yourself out

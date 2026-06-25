@@ -156,6 +156,43 @@ A typical register read _(e.g. from a sensor)_ uses a *Repeated START*:
 
 ---
 
+#hl[Practical Example: I²C LCD Display]
+
+One of the most common I²C applications is a *character LCD display* (typically 16×2). Instead of using 6+ wires for parallel data, an I²C backpack controller reduces it to just 2 wires (SDA and SCL).
+
+#v(0.5em)
+
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 1.5em,
+  [#align(center)[#image("../../images/I2C-LCD.svg", width: 95%)]],
+  [
+    #rect(fill: accent.lighten(85%), stroke: accent, radius: 6pt, inset: 11pt)[
+      #text(weight: "bold", fill: accent)[How It Works] \
+      #v(0.2em)
+      #text(size: 15pt)[
+        The master sends I²C commands to the LCD controller IC (typically an *PCF8574* or similar). The controller handles all timing and parallel logic internally.
+      ]
+    ]
+    
+    #v(0.5em)
+    
+    #rect(fill: accent.lighten(85%), stroke: accent, radius: 6pt, inset: 11pt)[
+      #text(weight: "bold", fill: accent)[Typical Address] \
+      #v(0.2em)
+      #text(size: 15pt)[*0x27* or *0x3F* (configurable via solder jumpers)]
+    ]
+  ]
+)
+
+#v(0.5em)
+#text(fill: signal-high, weight: "bold")[Advantages:]
+- Minimizes wiring on the breadboard
+- Simpler code — just send bytes via I²C instead of managing multiple GPIO pins
+- LCD is still readable, but control is now *addressable* and *flexible*
+
+---
+
 #hl[Clock Stretching]
 
 A slave that needs more time to process data can *hold SCL Low* after the master releases it — effectively pausing the clock.
