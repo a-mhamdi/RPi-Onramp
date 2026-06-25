@@ -67,41 +67,26 @@ SPI uses *4 wires* (plus ground):
 
 #hl[How a Transfer Works]
 
-  #set enum(numbering: "1.")
-  + Master pulls *CS Low* to select the slave
-  + Master generates *clock pulses* on SCLK
-  + On each clock cycle:
-  - Master shifts one bit out on *MOSI*
-  - Slave shifts one bit out on *MISO*
-  + After all bits, master releases *CS High*
+#set enum(numbering: "1.")
++ Master pulls *CS Low* to select the slave
++ Master generates *clock pulses* on SCLK
++ On each clock cycle:
+- Master shifts one bit out on *MOSI*
+- Slave shifts one bit out on *MISO*
++ After all bits, master releases *CS High*
 
-  #v(0.5em)
-  Both devices shift simultaneously through an internal shift register —
-  it's essentially a *circular exchange* of bytes.
+#v(0.5em)
+Both devices shift simultaneously through an internal shift register —
+it's essentially a *circular exchange* of bytes.
 
-  #v(0.4em)
-  #note[Even if you only want to *read*, you must still clock out dummy bytes on MOSI to generate the clock.]
+#v(0.4em)
+#note[Even if you only want to *read*, you must still clock out dummy bytes on MOSI to generate the clock.]
 
 ---
 
 #hl[Practical Example: Sending Characters]
 
-SPI transfers look simple in theory, but seeing them in action really clarifies what's happening. Here's a real-world example: sending the ASCII characters *'A'* and *'B'* through SPI, byte by byte.
-
-#v(0.5em)
-
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 1em,
-  [
-    #align(center)[#text(weight: "bold", size: 16pt)[Transferring 'A']]  
-    #align(center)[#image("../../images/SPI-letter-A.png", width: 95%)]
-  ],
-  [
-    #align(center)[#text(weight: "bold", size: 16pt)[Transferring 'B']]  
-    #align(center)[#image("../../images/SPI-Letter-B.png", width: 95%)]
-  ],
-)
+SPI transfers look simple in theory, but seeing them in action really clarifies what's happening. We consider the example of sending the ASCII characters *'A'* and *'B'* through SPI, byte by byte.
 
 #v(0.5em)
 
@@ -111,7 +96,28 @@ In each diagram:
 - Data appears on *MOSI* (master sending) and *MISO* (slave responding) on each clock edge
 - After all 8 bits, *CS returns High*, completing the transfer
 
+---
+
 #text(fill: signal-high, weight: "bold")[Key observation:] Both directions are active simultaneously — *full-duplex*. If the slave has nothing to send, dummy bits are clocked back anyway.
+
+#v(5cm)
+
+---
+
+#grid(
+  columns: (1fr, 1fr),
+  gutter: 1em,
+  [
+    #align(center)[#text(weight: "bold", size: 16pt)[Transferring 'A']]
+    #align(center)[#image("../../images/SPI-letter-A.png", width: 100%)]
+  ],
+  [
+    #align(center)[#text(weight: "bold", size: 16pt)[Transferring 'B']]
+    #align(center)[#image("../../images/SPI-Letter-B.png", width: 100%)]
+  ],
+)
+
+#v(2cm)
 
 ---
 
@@ -165,15 +171,13 @@ Two parameters control timing. Each has 2 options → *4 modes* total.
 ---
 
 #align(center)[
-#grid(
-  columns: (auto, auto),
-  rows: (auto, auto),
-  gutter: 0.1em,
-  image("../../images/spi-mode0.svg", width: 80%),
-  image("../../images/spi-mode1.svg", width: 80%),
-  image("../../images/spi-mode2.svg", width: 80%),
-  image("../../images/spi-mode3.svg", width: 80%),
-)]
+  #grid(
+    columns: (auto, auto),
+    rows: (auto, auto),
+    gutter: 0.1em,
+    image("../../images/spi-mode0.svg", width: 80%), image("../../images/spi-mode1.svg", width: 80%),
+    image("../../images/spi-mode2.svg", width: 80%), image("../../images/spi-mode3.svg", width: 80%),
+  )]
 
 // #important[Master and slave *must* use the same mode. Check the slave's datasheet — most sensors default to Mode 0.]
 
@@ -207,7 +211,7 @@ Two parameters control timing. Each has 2 options → *4 modes* total.
 
   Slaves are chained: MISO of one feeds MOSI of the next. A single CS activates all. Data ripples through the chain.
 
-/*
+  /*
   #rect(fill: light, radius: 4pt, inset: 10pt)[
     #set text(font: "Fira Code", size: 10pt)
     ```
@@ -225,30 +229,30 @@ Two parameters control timing. Each has 2 options → *4 modes* total.
 ]
 
 #slide[
-#hl[SPI — Pros & Cons]
+  #hl[SPI — Pros & Cons]
 
-#grid(
-  columns: (1fr, 1fr),
-  gutter: 1.5em,
-  rect(fill: signal-high.lighten(75%), stroke: signal-high, radius: 6pt, inset: 14pt)[
-    #set text(size: 17pt)
-    - *Fast* — few MHz to 100 MHz, no protocol overhead
-    - *Simple* hardware and firmware
-    - *Full-duplex* — read and write simultaneously
-    - No addressing logic — CS line handles selection
-    - Works with almost any slave device
-  ],
-  rect(fill: signal-low.lighten(75%), stroke: signal-low, radius: 6pt, inset: 14pt)[
-    #set text(size: 17pt)
-    - *4 wires minimum* — grows with slave count (CS pins)
-    - No acknowledgement — master can't detect absent slave
-    - No built-in error detection (no parity, no CRC in protocol)
-    - Short distances only — no defined max cable length
-    - No multi-master support in standard spec
-  ],
-)
+  #grid(
+    columns: (1fr, 1fr),
+    gutter: 1.5em,
+    rect(fill: signal-high.lighten(75%), stroke: signal-high, radius: 6pt, inset: 14pt)[
+      #set text(size: 17pt)
+      - *Fast* — few MHz to 100 MHz, no protocol overhead
+      - *Simple* hardware and firmware
+      - *Full-duplex* — read and write simultaneously
+      - No addressing logic — CS line handles selection
+      - Works with almost any slave device
+    ],
+    rect(fill: signal-low.lighten(75%), stroke: signal-low, radius: 6pt, inset: 14pt)[
+      #set text(size: 17pt)
+      - *4 wires minimum* — grows with slave count (CS pins)
+      - No acknowledgement — master can't detect absent slave
+      - No built-in error detection (no parity, no CRC in protocol)
+      - Short distances only — no defined max cable length
+      - No multi-master support in standard spec
+    ],
+  )
 
-#url-block("codes/spi.jl")
+  #url-block("codes/spi.jl")
 ]
 ---
 

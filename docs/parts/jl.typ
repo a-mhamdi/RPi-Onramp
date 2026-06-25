@@ -9,8 +9,7 @@ Julia is a high-level, high-performance programming language designed for numeri
 This document covers how to install Julia on a *Raspberry Pi*, how to manage GPIO and serial connections, how to use Julia's networking stack, and how to write practical programs that tie these capabilities together.
 
 == Initial Setup
-
-#title-slide("Getting Started with Julia on Raspberry Pi", "Installation and First Steps")
+#title-slide("Getting Started with Julia", "Installation and First Steps")
 
 === Hardware Requirements
 
@@ -68,7 +67,6 @@ juliaup default <version>
 ---
 
 == First Launch and the REPL
-
 #title-slide("Using the Julia REPL", "Interactive Programming and Package Management")
 
 Start Julia by typing `julia` in the terminal. You will be greeted by the interactive REPL _(Read-Eval-Print Loop)_. From here you can enter expressions, manage packages, and run scripts.
@@ -102,7 +100,6 @@ Julia compiles packages on first use. On a Raspberry Pi this can be slow — sev
 ---
 
 == Working with Local Projects and Environments
-
 #title-slide("Project Management", "Using Local Environments and Running Scripts")
 
 Julia's package manager allows you to create project-specific environments that are isolated from the global package depot. This ensures reproducibility and prevents version conflicts across different projects.
@@ -111,7 +108,7 @@ Julia's package manager allows you to create project-specific environments that 
 
 Navigate to your project directory:
 ```bash
-cd code
+cd codes
 ```
 
 Start the Julia REPL:
@@ -121,26 +118,36 @@ julia
 
 Enter package mode by pressing `]`, then activate the local environment:
 ```julia
-] activate .
+]activate .
 ```
-
 The `.` indicates the current directory. This creates or activates a `Project.toml` and `Manifest.toml` in the project folder.
 
-=== Adding Packages to Your Environment
+#info[Automatic environment activation can be achieved through the startup file located at `~/.julia/config/startup.jl`.
+  ```julia
+  import Pkg;
+  if isfile("Project.toml") # && isfile("Manifest.toml")
+     	Pkg.activate(".")
+  end
+  ```]
+
+---
+
+=== Adding Packages
 
 While in package mode, add a new package:
 ```julia
-] add package_name
+add <PackageName>
 ```
 
 For example:
 ```julia
-] add Plots
-] add DataFrames
-] add HTTP
+add Plots
+add DataFrames HTTP
 ```
 
-Packages are recorded in `Project.toml` and their exact versions in `Manifest.toml`. This makes your project reproducible across different machines.
+Packages are recorded in `Project.toml` and their exact versions in `Manifest.toml`. This makes the project reproducible across different machines.
+
+---
 
 === Running Scripts
 

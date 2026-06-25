@@ -1,5 +1,6 @@
 [deps]
 FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
 IJulia = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
 ImageInTerminal = "d8c32880-2388-543b-8c61-d9f865259254"
 LibSerialPort = "a05a14c7-6e3b-5ba9-90a2-45558833e1df"

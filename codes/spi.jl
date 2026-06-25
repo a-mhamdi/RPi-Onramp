@@ -33,7 +33,6 @@ function spi_xfer(tx::Vector{UInt8})
         UInt32(0)
     )
 
-    # ✔ FIX IMPORTANT (correct ioctl)
     SPI_IOC_MESSAGE_1 = 0x40206B00
 
     ccall(:ioctl, Int32,
@@ -58,4 +57,4 @@ function spi_send(message::String)
     println("Received: ", String(Char.(rx)))
 end
 
-spi_send("mejri SPI!")
+spi_send("Hello, World!")

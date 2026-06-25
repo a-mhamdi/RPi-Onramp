@@ -21,8 +21,8 @@
   aspect-ratio: "16-9",
   footer: self => "RPi Onramp | A. Mhamdi",
   config-info(
-    title: [Raspberry Pi Onramp],
-    subtitle: [A Beginner's Guide to Tinkering with Hardware and Code],
+    title: [Raspberry Pi & Julia],
+    subtitle: [Guide to Tinkering with Hardware and Code],
     author: [Abdelbacet Mhamdi],
     date: datetime.today(),
     institution: [MT \@ ISET Bizerte],

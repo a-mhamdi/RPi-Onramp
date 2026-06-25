@@ -73,4 +73,4 @@ function lcd_set_cursor(row::Int, col::Int)
     lcd_command(addr)
 end
 
-end # module
+end

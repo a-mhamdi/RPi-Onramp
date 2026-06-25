@@ -4,15 +4,15 @@
 
 using LibSerialPort
 
-PORT  = "/dev/ttyAMA0"
-BAUD  = 9600
+PORT = "/dev/ttyAMA0"
+BAUD = 9600
 
 try
     LibSerialPort.open(PORT, BAUD) do sp
         sleep(0.5)
         sp_flush(sp, SP_BUF_BOTH)
 
-        msg = "Hello\n"
+        msg = "Hello, World!\n"
         write(sp, msg)
         println("Sent: ", strip(msg))
 

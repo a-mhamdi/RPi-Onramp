@@ -6,7 +6,7 @@
 #let dark = rgb("#1a1a2e")
 #let light = rgb("#f4f4f4")
 #let bg-light = rgb("#EAF4F6")
-#let muted    = rgb("#5C6E7A")
+#let muted = rgb("#5C6E7A")
 #let signal-high = rgb("#02C39A")
 #let signal-low = rgb("#F96167")
 #let light-blue = rgb("#4A4A75")
@@ -116,7 +116,7 @@
     ],
     [
       Source code is available at #h(5pt) #text(fill: rgb("#0969da"))[
-        #link("https://github.com/a-mhamdi/RPi-Onramp/blob/main/" + url)[#url]
+        #link("https://github.com/a-mhamdi/rpi-julia-spectral-monitoring/blob/main/" + url)[#url]
       ]
     ],
   )

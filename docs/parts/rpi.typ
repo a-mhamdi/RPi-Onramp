@@ -241,7 +241,6 @@ Then restart the SSH service.
   would require physical access to the Pi to recover.]
 
 == Git and GitHub
-
 #title-slide("Git and GitHub", "Version Control and Collaboration")
 
 Git is a distributed version control system that tracks changes to files and directories over time. It allows you to commit snapshots of your work, branch off for experiments, and merge changes back together.
