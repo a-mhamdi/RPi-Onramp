@@ -99,6 +99,61 @@ exit()
 
 Julia compiles packages on first use. On a Raspberry Pi this can be slow — several minutes for large packages — but subsequent launches are fast. Precompilation happens automatically when you `add` a package or `using` it for the first time. // Use `PackageCompiler.jl` to create a custom system image if startup time is critical for your application.
 
+---
+
+== Working with Local Projects and Environments
+
+#title-slide("Project Management", "Using Local Environments and Running Scripts")
+
+Julia's package manager allows you to create project-specific environments that are isolated from the global package depot. This ensures reproducibility and prevents version conflicts across different projects.
+
+=== Activating a Local Environment
+
+Navigate to your project directory:
+```bash
+cd code
+```
+
+Start the Julia REPL:
+```bash
+julia
+```
+
+Enter package mode by pressing `]`, then activate the local environment:
+```julia
+] activate .
+```
+
+The `.` indicates the current directory. This creates or activates a `Project.toml` and `Manifest.toml` in the project folder.
+
+=== Adding Packages to Your Environment
+
+While in package mode, add a new package:
+```julia
+] add package_name
+```
+
+For example:
+```julia
+] add Plots
+] add DataFrames
+] add HTTP
+```
+
+Packages are recorded in `Project.toml` and their exact versions in `Manifest.toml`. This makes your project reproducible across different machines.
+
+=== Running Scripts
+
+From within the Julia REPL, execute a Julia script file:
+```julia
+include("script.jl")
+```
+
+Alternatively, run a script directly from the shell without entering the REPL:
+```bash
+julia script.jl
+```
+
 === Julia Onramp
 
 #url-block("codes/julia-onramp.ipynb")

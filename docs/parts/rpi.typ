@@ -32,6 +32,37 @@ To install a specific package:
 sudo apt install git  # install git
 ```
 
+== Connectivity and Network Configuration
+
+#title-slide("Connectivity", "Testing and Setting Up Wi-Fi")
+
+=== Checking Connectivity
+
+Before configuring network access, you should connect the raspberry pi to your machine using ethernet and verify that the Raspberry Pi is reachable from your local machine:
+```bash
+ping raspberrypi.local
+```
+
+If the ping succeeds, the Pi is on the network and responding to mDNS (multicast DNS) queries. If it fails, check the physical Ethernet connection.
+
+=== Wi-Fi Configuration
+
+On the Raspberry Pi, use `nmcli` (NetworkManager command-line interface) to configure Wi-Fi connections.
+
+List available Wi-Fi networks to check that the raspberry pi can detect your network:
+```bash
+nmcli dev wifi list
+```
+
+Connect to a Wi-Fi network:
+```bash
+sudo nmcli dev wifi connect "SSID_NAME" password "WIFI_PASSWORD"
+```
+
+Replace `SSID_NAME` with the network name and `WIFI_PASSWORD` with the password. The `sudo` prefix is required because Wi-Fi configuration is a privileged operation.
+
+#warning[Make sure your machine is connected to the same network as the Pi. Once Wi-Fi is configured, you can remove the Ethernet cable while staying connected to the Raspberry Pi terminal. If you disconnect before this step, you will lose connectivity and must reconnect via Ethernet to fix the Wi-Fi configuration.]
+
 == SSH Setup
 
 #title-slide("SSH", "Secure Shell Configuration")
